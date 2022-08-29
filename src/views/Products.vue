@@ -24,5 +24,12 @@ export default {
 </script>
 
 <style>
+    .products{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: column;
+    }
 
 </style> 

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../components/HomeView.vue'
 
 const routes = [
   {
@@ -18,27 +18,33 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Products.vue')
+    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue')
   },
   {
     path: '/products/:id',
-    name: 'single products',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SingleProducts.vue')
+    name: 'singleproducts',
+    component: () => import(/* webpackChunkName: "singleproducts" */ '../views/SingleProduct.vue'),
+    props: true
   },  
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/users/register',
+    name: 'signin',
+    component: () => import(/* webpackChunkName: "sign in" */ '../views/SignIn.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/users/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/products/admin',
+    name: 'productsadmin',
+    component: () => import(/* webpackChunkName: "products admin" */ '../views/ProductsAdmin.vue')
+  },
+  {
+    path: '/users/admin',
+    name: 'usersadmin',
+    component: () => import(/* webpackChunkName: "users admin" */ '../views/UserAdmin.vue')
   }
 ]
 

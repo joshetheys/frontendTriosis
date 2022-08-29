@@ -1,14 +1,14 @@
 <template>
   <div class="home">
     <div class="banner">
-        <div class="navbar">
+        <!-- <div class="navbar">
             <ul>
-<!--                 <li><a href="#">Home</a></li> -->
+                <li><a href="#">Home</a></li>
                 <li><a href="admin.html">Admin Page</a></li>
-<!--                 <li><a href="#">Contact</a></li>
-                <li><a href="#">About Us</a></li> -->
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About Us</a></li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="content">
             <h1>Triosis</h1>
@@ -30,3 +30,21 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.home{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        flex: column;
+background-image: url('https://i.postimg.cc/J4hD59hk/basile-y-KGct-NZp-XGo-unsplash.jpg') ;
+}
+</style>>
+
+
+
