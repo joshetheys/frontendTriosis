@@ -1,22 +1,14 @@
 <template>
-  <div class="home">
-    <div class="banner">
-        <!-- <div class="navbar">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="admin.html">Admin Page</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">About Us</a></li>
-            </ul>
-        </div> -->
-
-        <div class="content">
-            <h1>Triosis</h1>
-            <h2>Welcome to the World of Everything Cute</h2>
-            <p>Looking for a piece to commemorate your bias? Something to Show what fandom you belong to? Look no further than Triosis!</p>
-        </div>
+ 
+  
+  <div class="landing-page">
+      <div class="landing-text-inner">
+      <h1>Triosis</h1>
+      <h3 class= "sub-title"> Welcome to the World of Everything Cute</h3>
+      <a class='btn me-3' href="/users/register">Sign Up</a>
+      <a class='btn' href="/users/login"> Login </a>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -32,17 +24,74 @@ export default {
 </script>
 
 <style scoped>
+body{
+  margin: 0;
+  background:#eee;
+  height:auto;
+}
+h1 {
+  font-weight: 400;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin: 0;
+}
 
-.home{
-  height: 100vh;
-  width: 100%;
-  display: flex;
-        justify-content: center;
-        align-items: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        flex: column;
-background-image: url('https://i.postimg.cc/J4hD59hk/basile-y-KGct-NZp-XGo-unsplash.jpg') ;
+h3 {
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+main{
+  max-width:900px;
+
+  margin:0 auto;
+  
+}
+
+.landing-page{
+  display:flex;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+ background:url('https://i.postimg.cc/J4hD59hk/basile-y-KGct-NZp-XGo-unsplash.jpg');
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  flex: column;
+}
+
+@media (max-width:325px){
+  .landing-page{
+    display:flex;
+  justify-content:center;
+  align-content:center;
+  flex: column;
+  }
+}
+
+.landing-text-inner{
+  padding:5rem 1rem;
+  color:#fff;
+  display:block;
+  width:75%
+}
+.btn{
+  text-decoration:none;
+  color:#fff;
+  border:1px solid #eeeeee;
+  padding:1rem 3rem;
+  display:inline-block;
+  margin:2rem 0 0;
+  border-radius:50px;
+  transition: all 700ms ease-out;
+  justify-content: space-between;
+}
+.btn:hover{
+  background:#ccc;
+  color:#000;
 }
 </style>>
 
