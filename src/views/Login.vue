@@ -5,7 +5,7 @@
   
   
   <div class="signup-form">
-    <h2>Login</h2>
+    <h2 class="display-2 text-center" style="color: pink;">Login</h2>
 
     <input type="email" placeholder="Your Email">
     <input type="password" placeholder="Password"> 
@@ -102,7 +102,7 @@ h4{
 }
 
 
-.signup-form input[type="submit"]{
+.signup-form input[type="Login"]{
   padding: 25px;
   color: white;
   background-color: pink;
@@ -111,7 +111,7 @@ h4{
   border:none;
 }
 
-.signup-form input[type="submit"]:hover{
+.signup-form input[type="Login"]:hover{
     background:#ccc;
   color:#000;
 }
