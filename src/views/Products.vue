@@ -9,11 +9,34 @@
     <router-link to="/about">User Admin</router-link> |
     <router-link to="/about">User Profile</router-link> |
   </nav>
-  <div v-if="products">
-  <div v-for="product in products" :key="product.id">
-     {{product.title}}
-     <img :src="product.img" alt="img">
+  <div v-if="products" class="container">
+    <div class="row">
+
+    <div class=" col-lg-4 col-md-6 col-sm-12" v-for="product in products" :key="product.productID" style="padding: 20px;">
+      <div style="width: 20rem;">
+        <div>
+      <img :src="product.imgURL" alt="img" style="width: 20rem; height: 20rem;">
+    </div>
+    <div style="display:flex; justify-content:space-between">
+    <div>
+      {{product.title}}
+    </div>
+    <div>
+      {{product.size}}
+    </div>
+
   </div>
+      </div>
+
+   
+    
+
+    
+
+  </div>
+    </div>
+  
+  
 
   </div>
   <div v-else>loading</div>
@@ -33,14 +56,15 @@ export default {
 }
 </script>
 
-<style>
-    .products{
+<style scoped>
+
+    /* .products{
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         flex: column;
-    }
+    } */
 
     nav {
   padding: 30px;
@@ -54,4 +78,6 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+
 </style> 

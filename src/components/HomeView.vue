@@ -56,7 +56,7 @@ main{
   justify-content:center;
   align-items:center;
   text-align:center;
- background:url('https://i.postimg.cc/J4hD59hk/basile-y-KGct-NZp-XGo-unsplash.jpg');
+ background:url('https://i.postimg.cc/59np0HTZ/wallpaperflare-com-wallpaper.jpg');
   background-size:cover;
   background-repeat:no-repeat;
   background-position:center;

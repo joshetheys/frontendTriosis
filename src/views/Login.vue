@@ -7,15 +7,16 @@
   <div class="signup-form">
     <h2 class="display-2 text-center" style="color: pink;">Login</h2>
 
-    <input type="email" placeholder="Your Email">
-    <input type="password" placeholder="Password"> 
-    <input type="submit" value="Login" >
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="password" name="password" placeholder="Password" required> 
+    <input type="submit" value="Login" @click="login()" >
+   
     <p>Don't have an account? <span><a href ="/users/register">Sign Up</a></span></p>
-     <div class="socials">
+     <!-- <div class="socials">
        <i class="fab fa-facebook-f social-icon"></i>
        <i class="fab fa-google social-icon"></i>
        <i class="fab fa-twitter social-icon"></i>
-    </div>
+    </div> -->
   </div>
   
   
@@ -42,9 +43,7 @@ export default {
     },
 
     computed:{
-    login(){
-        return this.$store.state.login;
-    }
+   
   }
 };
 </script>
@@ -92,27 +91,29 @@ h4{
   display: block;
   margin: 30px auto;
   padding: 1.8em;
-  width: 60%;
+  width: 100%;
   max-width: 450px;
   border-radius: 50px;
-  color:#fff;
+  color:pink;
   border:1px solid #eeeeee;
   font-size: 1em;
   letter-spacing: 1px;
 }
 
 
-.signup-form input[type="Login"]{
+.signup-form input[type="submit"]{
   padding: 25px;
   color: white;
   background-color: pink;
   letter-spacing: 2px;
   width: 70%;
   border:none;
+  transition: background ease-in-out 1.5s ;
+  transition: color 1s;
 }
 
-.signup-form input[type="Login"]:hover{
-    background:#ccc;
+.signup-form input[type="submit"]:hover{
+    background: plum;
   color:#000;
 }
 
@@ -131,7 +132,7 @@ a{
   text-decoration: none;
 }
 
-.socials{
+/* .socials{
   padding: 3em;
 }
 
@@ -149,5 +150,5 @@ a{
 
 .fab{
     padding: 25px;
-}
+} */
 </style>

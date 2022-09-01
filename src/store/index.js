@@ -50,13 +50,13 @@ export default createStore({
   },
 
   async getProduct(context, id){
-    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/products/' + id);
+    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/products/' + productID);
     let res = await fetched.json();
     context.commit('setProduct',res.product)
   },
 
   async editProduct(context,payload){
-    fetch('/products/'+payload.product_id, {
+    fetch('/products/'+payload.productID, {
         method:'PUT',
         body: JSON.stringify(payload),
         headers:{
