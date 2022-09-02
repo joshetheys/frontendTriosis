@@ -25,6 +25,18 @@ const routes = [
     name: 'singleproducts',
     component: () => import(/* webpackChunkName: "singleproducts" */ '../views/SingleProduct.vue'),
     props: true
+  }, 
+  {
+    path: '/productsCategory/:category',
+    name: 'productcategory',
+    component: () => import(/* webpackChunkName: "productcatergory" */ '../views/ProductCategory.vue'),
+    // props: true
+  }, 
+  {
+    path: '/productsType/:type',
+    name: 'producttype',
+    component: () => import(/* webpackChunkName: "producttype" */ '../views/Type.vue'),
+    // props: true
   },  
   {
     path: '/users/register',

@@ -204,7 +204,21 @@ deleteCart(context){
       context.dispatch('getUserCart')
     }
   })
-}
+},
+async getProductCategory(context, category) {
+  fetch('https://triosis-eccomerce.herokuapp.com/productsCategory/' + category)
+    .then((res) => res.json())
+    
+    .then((data) =>
+     context.commit('setProducts', data.results))
+},
+async getProductType(context, type) {
+  fetch('https://triosis-eccomerce.herokuapp.com/productsType/' + type)
+    .then((res) => res.json())
+    
+    .then((data) =>
+     context.commit('setProducts', data.results))
+},
   },
   modules: {
   }

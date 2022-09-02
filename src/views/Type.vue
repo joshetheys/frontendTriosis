@@ -50,8 +50,9 @@ export default {
        }
    },
    mounted(){
-       this.$store.dispatch("getProducts");
-   }
+       this.$store.dispatch('getProductType', this.$route.params.type)
+   },
+   
 
 }
 </script>
