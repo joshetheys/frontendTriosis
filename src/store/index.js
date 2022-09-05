@@ -40,7 +40,7 @@ export default createStore({
     async getProducts(context){
       let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/products');
       let res = await fetched.json();
-      context.commit('setProducts',res.products)
+      context.commit('setProducts', res.products)
     },
 
   async getUsers(context){
@@ -50,9 +50,10 @@ export default createStore({
   },
 
   async getProduct(context, id){
-    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/products/' + productID);
+    console.log(id)
+    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/products/' + id);
     let res = await fetched.json();
-    context.commit('setProduct',res.product)
+    context.commit('setProduct', res.results)
   },
 
   async editProduct(context,payload){

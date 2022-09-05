@@ -1,33 +1,73 @@
 <template>
-   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/Products">Products</router-link> |
-    <router-link to="/about">Products Admin</router-link> |
-    <router-link to="/about">Login</router-link> |
-    <router-link to="/about">Sign In</router-link> |
-    <router-link to="/about">User Admin</router-link> |
-    <router-link to="/about">User Profile</router-link> |
-  </nav>
+  <div id="page">
+      <div v-if="user">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col">
+                      <h1>{{ user.firstname }}'s Cart</h1>
+                  </div>
+                  <div class="col"><button type="button" @click="clear()">Delete All</button></div>
+              </div>
+              <div class="row" v-for="product in cart" :key="product" :product="product">
+                  <div class="col">
+                      <h1>{{ product.title }}</h1>
+                  </div>
+                  <div class="col"><button type="button" @click="deleteSingle()">Delete Item</button></div>
+              </div>
+          </div>
+      </div>
+      <div v-else>
+          <div class="container-fluid">
+              <div class="row heading">
+                  <h1>Your Cart</h1>
+              </div>
+          </div>
+      </div>
+  </div>
 </template>
 
 <script>
 export default {
-
+  computed: {
+      user() {
+          return this.$store.state.user
+      },
+      cart() {
+          return this.$store.state.cart
+      },
+      total(){
+        return Math.round((this.$store.state.total + Number.EPSILON)*100)/100
+      }
+  },
+  methods: {
+      clear() {
+          this.$store.dispatch('deleteCart')
+          this.cart = null
+      },
+      deleteSingle() {
+          this.$store.dispatch('deleteSingleCart')
+      }
+  }
 }
+
 </script>
 
-<style>
-nav {
-  padding: 30px;
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#page {
+  background-color: pink;
+  width: 100%;
+  height: 93vh;
+  font-family: Rockwell;
+  color: black;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.heading {
+  text-align: center;
+  text-decoration: underline;
 }
 </style>
