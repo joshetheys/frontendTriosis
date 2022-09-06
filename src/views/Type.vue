@@ -14,9 +14,11 @@
 
    <div class=" col-lg-4 col-md-6 col-sm-12" v-for="product in products" :key="product.productID" style="padding: 20px;">
      <div style="width: 20rem;">
-       <div>
-     <img :src="product.imgURL" alt="img" style="width: 20rem; height: 20rem;">
-   </div>
+      <router-link :to="{ name: 'singleproducts', params: { id: product.productId } }"> 
+          <div>
+            <img :src="product.imgURL" alt="img" style="width: 20rem; height: 20rem;">
+          </div>
+        </router-link>
    <div style="display:flex; justify-content:space-between">
    <div>
      {{product.title}}

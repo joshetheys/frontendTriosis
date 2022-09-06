@@ -89,14 +89,14 @@ async deleteProduct(context,payload){
 },
 
   register(context, payload){
-    const {fullname, email, password, number} = payload
+    const {fullnames, email, userpassword} = payload
     fetch('https://triosis-eccomerce.herokuapp.com/users', {
     method: 'POST',
     body: JSON.stringify({
-        user_fullname: fullname,
+        fullnames: fullnames,
         email: email,
-        password: password,
-        phone_number: number
+        userpassword: userpassword,
+       
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -107,10 +107,11 @@ async deleteProduct(context,payload){
       if (data.msg == "The provided email exists. Please enter another one") {
         alert("The provided email exists. Please enter another one");
       } else {
-        alert('Registration Successful');
+        console.log(data.token)
+        alert("Registration Successful");
         context.commit('setToken',data.token);
         setTimeout(()=>{
-          router.push('/login'), 5000
+          router.push('/users/login'), 5000
         })
       }
 
@@ -119,12 +120,12 @@ async deleteProduct(context,payload){
   },
 
   login(context, payload){
-    const { email, password } = payload
+    const { email, userpassword } = payload
     fetch('https://triosis-eccomerce.herokuapp.com/users', {
     method: 'PATCH',
     body: JSON.stringify({
         email: email,
-        password: password,
+        userpassword: userpassword,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -138,13 +139,14 @@ async deleteProduct(context,payload){
         if (data.msg == 'Password is Incorrect') {
           alert(data.msg)
         } else {
-          alert(`Welcome, ${data.user[0].user_fullname}`)
-          context.commit('setUser',data.user[0])
+          console.log(data.token)
+          alert(`Welcome, ${data.results[0].fullnames}`)
+          context.commit('setUser',data.results[0])
           context.commit('setToken',data.token)
           context.dispatch('getUserCart')
           setTimeout(()=>{
-            router.push('https://triosis-eccomerce.herokuapp.com/products'), 5000
-          })
+            router.push('/products'), 5000
+          }) 
         }
       }
 
@@ -152,21 +154,21 @@ async deleteProduct(context,payload){
 
   },
   async getUserCart(context){
-    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.user_id + '/cart');
+    let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart');
     let res = await fetched.json();
     context.commit('setUserCart', res.cart)
     context.dispatch('getTotalCart')
   },
 
   addCart(context, payload){
-    const {title, category, description, image, price, created_by} = payload
-    fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.user_id + 'https://triosis-eccomerce.herokuapp.com/cart', {
+    const {title, category, description, imgURL, price, created_by} = payload
+    fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + 'https://triosis-eccomerce.herokuapp.com/cart', {
     method: 'POST',
     body: JSON.stringify({
         title: title,
         category: category,
         description: description,
-        image: image,
+        imgURL: imgURL,
         price: price,
         created_by: created_by
     }),

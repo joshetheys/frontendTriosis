@@ -14,9 +14,9 @@
   
   <div class="signup-form">
     <h2 class="display-2 text-center" style="color: pink;">Sign Up</h2>
-    <input type="email" name="email" placeholder="Your Full Names" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <input type="password" name="password" placeholder="Password" required> 
+    <input type="text" v-model="fullnames" name="fullnames" placeholder="Your Full Names" required>
+    <input type="email" v-model="email" name="email" placeholder="Your Email" required>
+    <input type="password" v-model="userpassword" name="password" placeholder="Password" required> 
     <input type="submit" value="Register" @click="register()" >
    
     <p>Already have an account? <span><a href ="/users/login">Login</a></span></p>
@@ -36,27 +36,27 @@
 export default {
   data(){
     return{
-      fullname: '',
+      fullnames: '',
       email: '',
-      password: ''
+      userpassword: ''
     }
   },
   methods:{
     register(){
-      const user = {
-          fullname: this.fullname,
+      const results = {
+          fullnames: this.fullnames,
           email: this.email,
-          password: this.password
+          userpassword: this.userpassword
       }
-      this.$store.dispatch('register', user) 
+      this.$store.dispatch('register', results) 
     }
     
   },
 
   computed:{
-    register(){
-        return this.$store.state.register;
-    }
+    user(){
+    return this.$store.state.user;
+   }
   }
 
 };
