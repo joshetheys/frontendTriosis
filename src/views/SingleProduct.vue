@@ -66,7 +66,7 @@ export default {
   props: ['id'],
     mounted() {
       this.$store.dispatch("getProduct", this.id);
-    // this.$store.dispatch("getProduct", this.id);
+     this.$store.dispatch("setUserCart", this.id);
     },
     computed: {
       product() {
@@ -79,6 +79,7 @@ export default {
     methods:{
       addCart(){
         let product = {
+          productId: this.product[0].productId,
           title: this.product[0].title,
           category: this.product[0].category,
           type: this.product[0].type,
@@ -91,6 +92,7 @@ export default {
         this.$store.dispatch('addCart', product, this.user.id)
       }
     }
+    
 }
 </script>
 

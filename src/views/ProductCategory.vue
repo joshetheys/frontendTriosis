@@ -1,17 +1,8 @@
 <template>
-   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/products">Products</router-link> |
-    <router-link to="/products/admin">Products Admin</router-link> |
-    <router-link to="/users/login">Login</router-link> |
-    <router-link to="/users/register">Sign In</router-link> |
-    <router-link to="/users/admin">User Admin</router-link> |
-    <router-link to="/router-linkbout">User Profile</router-link> |
-  </nav>
     <div v-if="products" class="container">
+      <input type="search" placeholder="Search Products" class="search w-75  background:pink  mt-4 mb-3" v-model="search">
       <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-12" v-for="product in products" :key="product.productId" style="padding: 20px;">
+      <div class="col-lg-4 col-md-6 col-sm-12"  id="productCard" v-for="product in products" :key="product.productId" style="padding: 20px;">
         <div style="width: 20rem;">
           <router-link :to="{ name: 'singleproducts', params: { id: product.productId } }"> 
           <div>
@@ -41,20 +32,36 @@
 
 <script>
     export default {
-        mounted(){
-            this.$store.dispatch('getProductCategory', this.$route.params.category)
-            this.$store.commit("setProduct", null);
-            this.$store.commit("setProducts", null);
+      name: 'singleproducts',
+  props:["product"],
+
+  data(){
+    return {
+      search: ''
+    }
+  },
+    computed:{
+        products(){
+            return this.$store.state.products;
         },
-        computed:{
-            products(){
-                return this.$store.state.products;
-                
-            }
-        }
+        products() {
+            return this.$store.state.products?.filter(products => { let isMatch = true; if (!products.title.toLowerCase().includes(this.search.toLowerCase())) { isMatch = false; } return isMatch });
+        },
+    },
+    mounted(){
+        this.$store.dispatch("getProducts");
+        this.$store.commit("setProduct", null);
+        this.$store.commit("setProducts", null);
+     
+    },
+    
     }
 </script>
 
 <style scoped>
- 
+ @media (min-width: 992px) and (max-width: 1199px){
+      #productCard{
+        margin-right: 40px;
+      }
+    }
 </style>
