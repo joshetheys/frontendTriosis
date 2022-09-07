@@ -52,7 +52,9 @@ export default {
        }
    },
    mounted(){
-       this.$store.dispatch('getProductType', this.$route.params.type)
+       this.$store.dispatch('getProductType', this.$route.params.type);
+       this.$store.commit("setProduct", null);
+       this.$store.commit("setProducts", null);
    },
    
 

@@ -10,6 +10,7 @@
     <router-link to="/router-linkbout">User Profile</router-link> |
   </nav>
   <div  v-if="products" class="container">
+
     <div class="row">
       <div class=" col-lg-4 col-md-6 col-sm-12">
         <router-link to="/productsCategory/K-Pop"><div class="card text-white">
@@ -113,7 +114,7 @@
 
 
    
-
+    <input type="search" placeholder="Search Products" class="search w-75  background:pink  mt-4 mb-3" v-model="search">
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-12" v-for="product in products" :key="product.productId" style="padding: 20px;">
         <div style="width: 20rem;">
@@ -146,13 +147,27 @@
 
 <script>
 export default {
+
+  name: 'singleproducts',
+  props:["product"],
+
+  data(){
+    return {
+      search: ''
+    }
+  },
     computed:{
         products(){
             return this.$store.state.products;
-        }
+        },
+        products() {
+            return this.$store.state.products?.filter(products => { let isMatch = true; if (!products.title.toLowerCase().includes(this.search.toLowerCase())) { isMatch = false; } return isMatch });
+        },
     },
     mounted(){
         this.$store.dispatch("getProducts");
+        this.$store.commit("setProduct", null);
+        this.$store.commit("setProducts", null);
      
     },
     

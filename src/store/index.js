@@ -69,9 +69,20 @@ export default createStore({
 },
 
 async addProduct(context,payload){
+  const {title, category, type, description, size, imgURL, quantity, price, createdBy} = payload
   fetch('/products', {
       method:'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        title: title, 
+        category: category, 
+        type: type, 
+        description: description,
+        size: size, 
+        imgURL: imgURL, 
+        quantity: quantity, 
+        price: price, 
+        createdBy: createdBy
+      }),
       headers:{
           'Content-type': 'application/json; charset=UTF-8'
       }

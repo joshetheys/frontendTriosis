@@ -43,10 +43,13 @@
     export default {
         mounted(){
             this.$store.dispatch('getProductCategory', this.$route.params.category)
+            this.$store.commit("setProduct", null);
+            this.$store.commit("setProducts", null);
         },
         computed:{
             products(){
                 return this.$store.state.products;
+                
             }
         }
     }
