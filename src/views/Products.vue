@@ -1,6 +1,6 @@
 <template>
     
-  <div  v-if="products" class="container">
+  <div  v-if="products" class="containers">
 
     <div class="row">
       <div class=" col-lg-4 col-md-6 col-sm-12" id="productCard">
@@ -175,6 +175,10 @@ export default {
         align-items: center;
         flex: column;
     } */
+    .container{
+      display: flex;
+      margin-left: 40px;
+    }
 
     @media (min-width: 992px) and (max-width: 1199px){
       #productCard{

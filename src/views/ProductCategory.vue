@@ -49,7 +49,7 @@
         },
     },
     mounted(){
-        this.$store.dispatch("getProducts");
+      this.$store.dispatch('getProductCategory', this.$route.params.category)
         this.$store.commit("setProduct", null);
         this.$store.commit("setProducts", null);
      

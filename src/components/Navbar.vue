@@ -9,25 +9,28 @@
     <div class="collapse navbar-collapse"  id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+        </li>
+        <li class="nav-item pt-2 pe-2 ps-2 text-white">
+          <div data-bs-toggle="offcanvas" data-bs-target="#userCart" v-if="user">Cart</div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
+          <router-link class="nav-link" to="/about">About</router-link>
+        </li>
+        <li class="nav-item" v-if="user">
+          <router-link class="nav-link" to="/products">Products</router-link>
+        </li>
+        <li class="nav-item" v-if="user">
+          <router-link class="nav-link" to="/products/admin">Products Admin</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/products">Products</a>
+          <router-link class="nav-link" to="/users/login">Login</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/products/admin">Products Admin</a>
+          <router-link class="nav-link" to="/users/register">Sign In</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/register">Sign In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/admin">User Admin</a>
+        <li class="nav-item" v-if="user">
+          <router-link class="nav-link" to="/users/admin">User Admin</router-link>
         </li>
 
         <!-- <li class="nav-item dropdown">
@@ -52,12 +55,22 @@
     </div>
   </div>
 </nav>
+
+<Cart :user="user"/>
 </template>
 
 <script>
+import Cart from './Cart.vue';
 export default {
-
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    },
+    components: { Cart }
 }
+
+
 </script>
 
 <style>

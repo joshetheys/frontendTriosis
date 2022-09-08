@@ -3,41 +3,15 @@
 
 
   <div class="container">
-    <div class="row my-2">
-      <div class="col-md">
-        <router-link to="/users/register">
-          <button class="btn btn-primary">Add New User</button>
-        </router-link>
-      </div>
+    <div class="row">
+    
       <div class="col-md">
         <router-link to="/products/add">
           <button class="btn btn-primary">Add New Product</button>
         </router-link>
       </div>
     </div>
-    <h2 class="display-2">User</h2>
-    <div class=" table-responsive">
-      <table class="table table-hover">
-        <thead class="bg-gradient">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Fullnames</th>
-            <th scope="col">User role</th>
-            <th scope="col">Email</th>
-            <th scope="col">Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(user, index) in users" :key="index">
-            <td data-title="ID">{{user.id}}</td>
-            <td data-title="Fullnames">{{user.fullnames}}</td>
-            <td data-title="User Role">{{user.userRole}}</td>
-            <td data-title="Email">{{user.email}}</td>
-            <td data-title="Password">{{user.userpassword}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    
     <h2 class="display-2">Product</h2>
     <div class="table-responsive">
       <table class="table table-hover">
@@ -49,6 +23,7 @@
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
             <th scope="col">Created By</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody v-if="products">
@@ -61,9 +36,48 @@
             <td data-title="Quantity">{{product.quantity}}</td>
             <td data-title="Price">R {{product.price}}</td>
             <td data-title="Created By">{{product.createdBy}}</td>
+            <td>
+              <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        :data-bs-target="'#update'+product.productId">
+                        <i class="fas fa-edit"></i>
+                    </button>
+              <!-- <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button> -->
+            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+            </td>
           </tr>
         </tbody>
       </table>      
+    </div>
+<!-- Modal -->
+    <div v-for="product in products" :key="product">
+        <div class="modal fade" :id="'update'+product.productId" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" v-model="product.title">
+                        <input type="text" v-model="product.category">
+                        <input type="text" v-model="product.type">
+                        <input type="text" v-model="product.description">
+                        <input type="text" v-model="product.size">
+                        <input type="text" v-model="product.imgURL">
+                        <input type="text" v-model="product.price">
+                        <input type="text" v-model="product.createdBy">
+  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"
+                            @click="this.$store.dispatch('updateProduct', product)">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
   </div>
@@ -75,29 +89,16 @@ export default {
         products(){
             return this.$store.state.products;
         },
-    users(){
-    return this.$store.state.users;
-   }
+   
     },
     mounted(){
         this.$store.dispatch("getProducts");
-        this.$store.dispatch("getUsers");
+   
     }
 
 }
 </script>
 
 <style>
-  nav {
-    padding: 30px;
-  }
-  
-  nav a {
-    font-weight: bold;
-    color: #2c3e50;
-  }
-  
-  nav a.router-link-exact-active {
-    color: #42b983;
-  }
+ 
   </style>

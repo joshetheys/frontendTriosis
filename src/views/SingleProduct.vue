@@ -40,7 +40,7 @@
                     <strong>Price: </strong><em>R{{ product[0].price }}</em>
                   </p>
 
-                  <button id="cartbtn"  @click="addCart()">
+                  <button id="cartbtn" class="text-white"  @click="addCart()">
                     <strong>Cart</strong>
                   </button>
 
@@ -66,7 +66,7 @@ export default {
   props: ['id'],
     mounted() {
       this.$store.dispatch("getProduct", this.id);
-     this.$store.dispatch("setUserCart", this.id);
+    //  this.$store.dispatch("setUserCart", this.id);
     },
     computed: {
       product() {
@@ -89,7 +89,7 @@ export default {
           price: this.product[0].price,
           createdBy: this.product[0].createdBy
         }
-        this.$store.dispatch('addCart', product, this.user.id)
+        this.$store.dispatch('addCart', product)
       }
     }
     

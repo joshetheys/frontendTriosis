@@ -1,5 +1,7 @@
 import router from '@/router'
 import { createStore } from 'vuex'
+import { toRaw } from 'vue'
+import swal from 'sweetalert';
 
 export default createStore({
   state: {
@@ -96,7 +98,24 @@ async deleteProduct(context,payload){
         method:'DELETE'
     })
     .then((res)=> res.json())
-    .then((data)=> context.dispatch('getProducts'))
+    .then((data)=> 
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover the product!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("The product has been deleted!", {
+          icon: "success",
+        });
+      } else {
+        swal("Your product is safe!");
+      }
+    }),
+    context.dispatch('getProducts'))
 },
 
   register(context, payload){
@@ -119,7 +138,7 @@ async deleteProduct(context,payload){
         alert("The provided email exists. Please enter another one");
       } else {
         console.log(data.token)
-        alert("Registration Successful");
+        swal("Registration Successful",  "success");
         context.commit('setToken',data.token);
         setTimeout(()=>{
           router.push('/users/login'), 5000
@@ -151,7 +170,7 @@ async deleteProduct(context,payload){
           alert(data.msg)
         } else {
           console.log(data.token)
-          alert(`Welcome, ${data.results[0].fullnames}`)
+          swal("Login Successful", `Welcome, ${data.results[0].fullnames}`,  "success");
           context.commit('setUser',data.results[0])
           context.commit('setToken',data.token)
           context.dispatch('getUserCart')
@@ -168,20 +187,24 @@ async deleteProduct(context,payload){
     let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart');
     let res = await fetched.json();
     context.commit('setUserCart', res.cart)
+    if (res.cart != null)
     context.dispatch('getTotalCart')
   },
 
   addCart(context, payload){
-    const {title, category, description, imgURL, price, created_by} = payload
-    fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + 'https://triosis-eccomerce.herokuapp.com/cart', {
+    const {productId, title, category, type, description, size, imgURL, price, createdBy} = payload
+    fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart', {
     method: 'POST',
     body: JSON.stringify({
-        title: title,
-        category: category,
-        description: description,
-        imgURL: imgURL,
-        price: price,
-        created_by: created_by
+      productId: productId,
+          title: title,
+          category: category,
+          type: type,
+          description: description,
+          size: size,
+          imgURL: imgURL,
+          price: price,
+        createdBy: createdBy
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -199,13 +222,14 @@ async deleteProduct(context,payload){
 }, 
 getTotalCart(context){
   let total = 0;
-  toRaw(context.state.cart).forEach(product => {
+  toRaw(JSON.parse(context.state.user.cart)).forEach(product => {
     total = total + product.price
   });
   context.commit('setTotal', total)
 },
+
 deleteCart(context){
-  fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.user_id + 'https://triosis-eccomerce.herokuapp.com/cart', {
+  fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart', {
   method: 'DELETE'
   })
   .then((res) => res.json())
@@ -214,10 +238,54 @@ deleteCart(context){
       alert(data.result)
     } else {
       alert(
-        'The purchase of ' + context.state.user.user_fullname + ' with a total of R' + Math.round((context.state.total + Number.EPSILON)*100)/100)
+        'The purchase of ' + context.state.user.fullnames + ' with a total of R' + Math.round((context.state.total + Number.EPSILON)*100)/100)
       context.dispatch('getUserCart')
     }
   })
+},
+// clearCart: async (context, id) => {
+//   id = context.state.user.id;
+//   await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart', {
+//       method: "DELETE",
+//       headers: {
+//         "Content-type": "application/json; charset=UTF-8"
+//       },
+//     })
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log(data);
+//       context.dispatch("getUserCart", id);
+//     });
+// },
+// deleteCartItem: async (context, id) => {
+//   let user = context.state.user.id
+//   await fetch(
+//     'https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart/' + id, {
+//         method: "DELETE",
+//         headers: {
+//           "Content-type": "application/json; charset=UTF-8"
+//         },
+//       }
+//     )
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log(data);
+//       context.dispatch("getUserCart", user);
+//     });
+// },
+deleteCartItem: async (context, id) => {
+  fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart/' + id, {
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      context.dispatch('getUserCart', context.state.user.id,
+        swal({
+          icon: "success",
+          buttons: false,
+          timer: 1000,
+        }))
+    });
 },
 async getProductCategory(context, category) {
   fetch('https://triosis-eccomerce.herokuapp.com/productsCategory/' + category)

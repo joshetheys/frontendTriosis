@@ -37,7 +37,12 @@ const routes = [
     name: 'producttype',
     component: () => import(/* webpackChunkName: "producttype" */ '../views/Type.vue'),
     // props: true
-  },  
+  }, 
+  {
+    path: '/adduser',
+    name: 'adduser',
+    component: () => import(/* webpackChunkName: "adduser" */ '../views/AddUser.vue')
+  }, 
   {
     path: '/users/register',
     name: 'signup',
@@ -66,7 +71,7 @@ const routes = [
   {
     path: '/users/cart',
     name: 'userscart',
-    component: () => import(/* webpackChunkName: "users cart" */ '../views/Cart.vue')
+    component: () => import(/* webpackChunkName: "users cart" */ '../components/Cart.vue')
   },
   {
     path: '/contact',
