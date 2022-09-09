@@ -1,4 +1,5 @@
-<template>
+
+.<template>
   <nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Triosis</a>
@@ -20,7 +21,7 @@
         <li class="nav-item" v-if="user">
           <router-link class="nav-link" to="/products">Products</router-link>
         </li>
-        <li class="nav-item" v-if="user">
+        <li class="nav-item" v-if="admin">
           <router-link class="nav-link" to="/products/admin">Products Admin</router-link>
         </li>
         <li class="nav-item">
@@ -29,10 +30,13 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/users/register">Sign In</router-link>
         </li>
-        <li class="nav-item" v-if="user">
+        <li class="nav-item" v-if="admin">
           <router-link class="nav-link" to="/users/admin">User Admin</router-link>
         </li>
-
+        <li class="nav-item" v-if="user">
+          <router-link class="nav-link" to="/users/admin"><i class="fa fa-user" aria-hidden="true"></i>User Profile</router-link>
+        </li>
+        
         <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
@@ -62,10 +66,14 @@
 <script>
 import Cart from './Cart.vue';
 export default {
-    computed: {
-        user() {
+  computed: {
+    user() {
             return this.$store.state.user;
-        }
+        },
+    admin() {
+      return this.$store.state.admin;
+    }
+    
     },
     components: { Cart }
 }
@@ -77,20 +85,15 @@ export default {
   .bg-dark {
     background-color: pink!important;
 }
-.fixed-top {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
-}
+
 /* @media (min-width: 768px)
 .navbar-expand-md {
     flex-wrap: nowrap;
     justify-content: flex-start;
 } */
 .navbar {
-    position: relative;
+    position: sticky;
+    top: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

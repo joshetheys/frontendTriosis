@@ -49,6 +49,9 @@
 export default {
   props: ['user'],
     computed:{
+      user(){
+        return this.$store.state.user
+      },
       cart(){
         return this.$store.state.cart
       },
@@ -58,7 +61,7 @@ export default {
 
     },
     methods:{
-      deleteCart(){
+      clear(){
         this.$store.dispatch('deleteCart')
         this.cart = null
       },

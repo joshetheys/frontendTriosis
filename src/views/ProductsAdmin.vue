@@ -42,8 +42,9 @@
                         :data-bs-target="'#update'+product.productId">
                         <i class="fas fa-edit"></i>
                     </button>
+                    <ModalProd :product="product" />
               <!-- <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button> -->
-              <button id="delete" class="btn btn-danger" @click="deleteProduct(product.id)">
+              <button id="delete" class="btn btn-danger" @click="this.$store.dispatch('deleteProduct', product.productId)">
                 <i class="far fa-trash-alt"></i>
                         </button>
             <!-- <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button> -->
@@ -52,42 +53,17 @@
         </tbody>
       </table>      
     </div>
-<!-- Modal -->
-    <div v-for="product in products" :key="product">
-        <div class="modal fade" :id="'update'+product.productId" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" v-model="product.title">
-                        <input type="text" v-model="product.category">
-                        <input type="text" v-model="product.type">
-                        <input type="text" v-model="product.description">
-                        <input type="text" v-model="product.size">
-                        <input type="text" v-model="product.imgURL">
-                        <input type="text" v-model="product.price">
-                        <input type="text" v-model="product.createdBy">
-  
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary"
-                            @click="this.$store.dispatch('updateProduct', product)">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
   </div>
 </template>
 
 <script>
+  import ModalProd from "../components/ModalProd.vue"
+
 export default {
+  components:{ ModalProd},
+  props:['product'],
     computed:{
         products(){
             return this.$store.state.products;
@@ -100,12 +76,21 @@ export default {
     },
 
     methods: {
-        editProduct() {
-            return this.$store.dispatch("editProduct", this.product);
-        },
-        deleteProduct(id) {
+      editProduct(){
+             
+              let newProduct = { 
+                  title: this.product.title,
+                  imgURL: this.product.imgURL,
+                  quantity: this.product.quantity,
+                  price: this.product.price,
+                  createdBy: this.product.createdBy
+              }
+              this.$store.dispatch('editProduct', changedProduct);
+              document.getElementById(`editProductClose`+this.product.productId).click();
+          },
+        deleteProduct() {
             console.log("Product was deleted");
-            return this.$store.dispatch("deleteProduct", id);
+            this.$store.dispatch("deleteProduct", this.product.productId);
         }
     }
 

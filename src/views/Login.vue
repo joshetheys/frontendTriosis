@@ -8,6 +8,7 @@
     <input type="email" v-model="email" name="email" placeholder="Your Email" required>
     <input type="password" v-model="userpassword" name="password" placeholder="Password" required> 
     <input type="submit" value="Login" @click="login()" >
+    <input type="submit" value="Logout" @click="setLogout()" >
    
     <p>Don't have an account? <span><a href ="/users/register">Sign Up</a></span></p>
      <!-- <div class="socials">
@@ -31,6 +32,10 @@ export default {
       }
     },
     methods:{
+      setLogout(){
+        this.$store.commit('setLogout');
+        swal("Logout Successful", "success");
+      },
       login(){
         const results = {
             email: this.email,

@@ -8,7 +8,7 @@
       <input type="text" v-model="fullnames" name="fullnames" placeholder="Your Full Names" required>
       <input type="email" v-model="email" name="email" placeholder="Your Email" required>
       <input type="password" v-model="userpassword" name="password" placeholder="Password" required> 
-      <input type="submit" value="Register" @click="register()" >
+      <input type="submit" value="Add New User" @click="addUser()" >
      
       <p>Want to return to Admin Page? <span><a href ="/products/admin">Admin Page</a></span></p>
        <!-- <div class="socials">
@@ -33,13 +33,13 @@
       }
     },
     methods:{
-      register(){
+      addUser(){
         const results = {
             fullnames: this.fullnames,
             email: this.email,
             userpassword: this.userpassword
         }
-        this.$store.dispatch('register', results) 
+        this.$store.dispatch('addUser', results) 
       }
       
     },

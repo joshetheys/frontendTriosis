@@ -57,7 +57,13 @@
 
    
   </div>
-  <div v-else>loading</div>
+  <div style=" height: 100vh; display: flex; justify-content: center; align-self: center;" v-else >
+    <div style="display: flex; justify-content: center; align-self: center">
+
+      <img src="https://i.postimg.cc/SxX9g01J/loading.gif" style="width: 100%; height: auto"/>
+
+    </div>
+  </div>
   
 </template>
 

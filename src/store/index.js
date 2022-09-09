@@ -7,8 +7,9 @@ export default createStore({
   state: {
     products: null,
     product: null,
-    user: null,
-    token: null,
+    user: null || JSON.parse(localStorage.getItem("user")),
+    token: null || localStorage.getItem("token"),
+    admin: false,
     cart: null,
     users: null,
     total: 0
@@ -36,6 +37,10 @@ export default createStore({
     },
     setTotal(state, total){
       state.total =total
+    },
+    setLogout(state){
+      state.user = "",
+      state.token = ""
     }
   },
   actions: {
@@ -59,7 +64,7 @@ export default createStore({
   },
 
   async editProduct(context,payload){
-    fetch('/products/'+payload.productID, {
+    fetch('https://triosis-eccomerce.herokuapp.com/products/'+payload.productId, {
         method:'PUT',
         body: JSON.stringify(payload),
         headers:{
@@ -72,7 +77,7 @@ export default createStore({
 
 async addProduct(context,payload){
   const {title, category, type, description, size, imgURL, quantity, price, createdBy} = payload
-  fetch('/products', {
+  fetch('https://triosis-eccomerce.herokuapp.com/products/', {
       method:'POST',
       body: JSON.stringify({
         title: title, 
@@ -90,11 +95,14 @@ async addProduct(context,payload){
       }
   })
   .then((res)=> res.json())
-  .then((data)=> context.dispatch('getProducts'));
+  .then((data)=> 
+  context.dispatch('getProducts'),
+  swal("Good job!", "You added a new product!", "success"),
+  router.push('/products/admin'), 5000);
 },
 
-async deleteProduct(context,payload){
-    fetch('https://triosis-eccomerce.herokuapp.com/products/'+payload, {
+async deleteProduct(context,productId){
+    fetch('https://triosis-eccomerce.herokuapp.com/products/'+ productId, {
         method:'DELETE'
     })
     .then((res)=> res.json())
@@ -149,6 +157,37 @@ async deleteProduct(context,payload){
 
   },
 
+  addUser(context, payload){
+    const {fullnames, email, userpassword} = payload
+    fetch('https://triosis-eccomerce.herokuapp.com/users', {
+    method: 'POST',
+    body: JSON.stringify({
+        fullnames: fullnames,
+        email: email,
+        userpassword: userpassword,
+       
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.msg == "The provided email exists. Please enter another one") {
+        alert("The provided email exists. Please enter another one");
+      } else {
+        console.log(data.token)
+        swal("You added a User Successfully",  "success");
+        context.commit('setToken',data.token);
+        setTimeout(()=>{
+          router.push('/users/admin'), 5000
+        })
+      }
+
+    });
+
+  },
+
   login(context, payload){
     const { email, userpassword } = payload
     fetch('https://triosis-eccomerce.herokuapp.com/users', {
@@ -174,6 +213,7 @@ async deleteProduct(context,payload){
           context.commit('setUser',data.results[0])
           context.commit('setToken',data.token)
           context.dispatch('getUserCart')
+          context.dispatch('setAdmin')
           setTimeout(()=>{
             router.push('/products'), 5000
           }) 
@@ -183,6 +223,53 @@ async deleteProduct(context,payload){
     });
 
   },
+
+  setAdmin(context) {
+    if (context.state.user != null) {
+      if (context.state.user.userRole === "admin") {
+        context.state.admin = true;
+      }
+      
+    }
+  },
+
+//   async editUser(context, id){
+//     fetch('https://triosis-eccomerce.herokuapp.com/users/'+ id, {
+//         method:'PUT',
+//         body: JSON.stringify({
+//           fullnames: fullnames,
+//           email: email,
+//         userpassword: userpassword,
+
+//         }
+//         ),
+//         headers:{
+//             'Content-type': 'application/json; charset=UTF-8'
+//         },
+//     })
+//     .then((res)=> res.json())
+//     .then((data)=> context.dispatch('getUsers'));
+// },
+async editUser(context,payload){
+  // const {fullnames, email} = payload;
+  fetch('https://triosis-eccomerce.herokuapp.com/users/'+ payload.id, {
+      method:'PUT',
+      body: JSON.stringify(payload),
+      headers:{
+          'Content-type': 'application/json; charset=UTF-8'
+      }
+  })
+  .then((res)=> res.json())
+  .then((data)=> context.dispatch('getUsers'));
+},
+
+async deleteUser(context,id){
+  fetch('https://triosis-eccomerce.herokuapp.com/users/'+ id, {
+      method:'DELETE'
+  })
+  .then((res)=> res.json())
+  .then((data)=> context.dispatch('getUsers'))
+},
   async getUserCart(context){
     let fetched = await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart');
     let res = await fetched.json();
@@ -215,7 +302,12 @@ async deleteProduct(context,payload){
         if (data.results == 'There is no user with that id') {
           alert(data.results)
         } else {
-          alert('Item Added')
+          swal({
+            title: "Great!",
+            text: "You added the product to the cart!",
+            icon: "success",
+            button: "Press Me",
+          });
           context.dispatch('getUserCart')
         }
   })
@@ -237,26 +329,11 @@ deleteCart(context){
     if (data.result == 'There is no user with that ID') {
       alert(data.result)
     } else {
-      alert(
-        'The purchase of ' + context.state.user.fullnames + ' with a total of R' + Math.round((context.state.total + Number.EPSILON)*100)/100)
+      swal("Your Order Is On the Way", 'The purchase of ' + context.state.user.fullnames + ' was successful', "success"); ``
       context.dispatch('getUserCart')
     }
   })
-},
-// clearCart: async (context, id) => {
-//   id = context.state.user.id;
-//   await fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart', {
-//       method: "DELETE",
-//       headers: {
-//         "Content-type": "application/json; charset=UTF-8"
-//       },
-//     })
-//     .then((res) => res.json())
-//     .then((data) => {
-//       console.log(data);
-//       context.dispatch("getUserCart", id);
-//     });
-// },
+}, 
 // deleteCartItem: async (context, id) => {
 //   let user = context.state.user.id
 //   await fetch(

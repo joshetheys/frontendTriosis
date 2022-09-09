@@ -1,10 +1,10 @@
 <template>
     
-  <div  v-if="products" class="containers">
+  <div  v-if="products" class="containers" style="margin-left: 80px">
 
     <div style="display: flex; justify-content: center; overflow: hidden; padding-bottom: 3rem; padding-top: 3rem">
-<video src="../assets/mp4/landing.mp4" style="height: 666px; padding-top: 5vh" autoplay muted loop></video>
-<img src="https://i.postimg.cc/rwc6Jcw9/banner.gif" alt="Banner" >
+
+<img src="https://i.postimg.cc/rwc6Jcw9/banner.gif"   alt="Banner" >
 
 </div>
 

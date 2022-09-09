@@ -31,48 +31,28 @@
             <td data-title="Email">{{user.email}}</td>
             <td data-title="Password">{{user.userpassword}}</td>
             <td>
-              <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        :data-bs-target="'#update'+user.id">
+                        :data-bs-target="'#updateUser'+user.id">
                         <i class="fas fa-edit"></i>
                     </button>
+                    <ModalUsers :user="user" />
               <!-- <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button> -->
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+            <button type="button" class="btn btn-danger"  @click="this.$store.dispatch('deleteUser', user.id)"><i class="far fa-trash-alt"></i></button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-<!-- Modal -->
-    <div v-for="user in users" :key="user">
-        <div class="modal fade" :id="'update'+user.id" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ user.fullnames }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" v-model="user.fullnames">
-                        <input type="text" v-model="user.userRole">
-                        <input type="text" v-model="user.email">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary"
-                            @click="this.$store.dispatch('updateuser', user)">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
   </div>
 </template>
 
 <script>
-export default {
+  import ModalUsers from "../components/ModalUsers.vue";
+  export default {
+  components:{ ModalUsers},
+  props:['user'],
     computed:{
        
     users(){
@@ -81,6 +61,24 @@ export default {
     },
     mounted(){
         this.$store.dispatch("getUsers");
+    },
+
+    methods: {
+      editUser(){
+             
+              let newUser = { 
+                fullnames: this.user.fullnames, 
+                email: this.user.email,  
+                userpassword: this.user.userpassword
+            
+              }
+              this.$store.dispatch('editUser', newUser);
+              document.getElementById(`editUser`+ this.user.id).click();
+          },
+        deleteUser() {
+            console.log("User was deleted");
+            this.$store.dispatch("deleteUser", this.user.id);
+        }
     }
 
 }
