@@ -75,7 +75,7 @@
     font-family: "Open Sans", sans-serif;
   }
   .container {
-    height: 100vh;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;

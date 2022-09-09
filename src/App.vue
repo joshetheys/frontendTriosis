@@ -2,6 +2,8 @@
   <Navbar/>
  
   <router-view/>
+
+
 <Footer/>
 <Cart/>
 </template>

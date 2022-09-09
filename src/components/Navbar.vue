@@ -13,10 +13,13 @@
           <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
         </li>
         <li class="nav-item pt-2 pe-2 ps-2 text-white">
-          <div data-bs-toggle="offcanvas" data-bs-target="#userCart" v-if="user">Cart</div>
+          <div data-bs-toggle="offcanvas" data-bs-target="#userCart" v-if="user"><i class="fa-solid fa-cart-shopping"></i>Cart</div>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/about">About</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/contact">Contact</router-link>
         </li>
         <li class="nav-item" v-if="user">
           <router-link class="nav-link" to="/products">Products</router-link>
@@ -34,7 +37,7 @@
           <router-link class="nav-link" to="/users/admin">User Admin</router-link>
         </li>
         <li class="nav-item" v-if="user">
-          <router-link class="nav-link" to="/users/admin"><i class="fa fa-user" aria-hidden="true"></i>User Profile</router-link>
+          <router-link class="nav-link" to="/users/profile"><i class="fa fa-user" aria-hidden="true"></i>User Profile</router-link>
         </li>
         
         <!-- <li class="nav-item dropdown">
@@ -100,6 +103,7 @@ export default {
     justify-content: space-between;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    
 }
 
 </style>

@@ -4,18 +4,18 @@
       <div
         class="card d-flex justify-content-center align-items-center flex-column border border-0"
       >
-        <h2 class="display-4">About Triosis</h2>
+        <h2 class="display-4" style="color:#fff;">About Triosis</h2>
         <div
           class="card-body d-flex justify-content-center align-items-center flex-column"
         >
           <p
-            class="d-flex justify-content-center align-items-center flex-column"
+            class="d-flex justify-content-center align-items-center flex-column" style="color:#fff;"
           >
             We are Triosis- A trio of sisters bringing you the best in second-hand and kawaii goods.
           </p>
-          <h3>The beginning of our journey</h3>
+          <h3 style="color:#fff;">The beginning of our journey</h3>
           <p
-            class="d-flex justify-content-center align-items-center flex-column ps-5 pe-5"
+            class="d-flex justify-content-center align-items-center flex-column ps-5 pe-5" style="color:#fff;"
           >
            Three Sisters with the same passion - Of course we created out own business!!!
            We love thrifting and K-Pop as much as you do and dedicate ourselves to delivering the best goods to you. 
@@ -39,8 +39,7 @@ export default {};
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  color: black;
-  background-color: rgb(242, 242, 242);
+  
   height: 100vh;
 }
 

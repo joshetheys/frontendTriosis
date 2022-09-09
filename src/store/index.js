@@ -55,6 +55,12 @@ export default createStore({
     let res = await fetched.json();
     context.commit('setUsers', res.users)
   },
+  async getUser(context, id){
+    
+    let fetched = await fetch ('https://triosis-eccomerce.herokuapp.com/users/' + id);
+    let res = await fetched.json();
+    context.commit('setUser', res.results)
+  },
 
   async getProduct(context, id){
     console.log(id)
@@ -142,10 +148,11 @@ async deleteProduct(context,productId){
     })
     .then((response) => response.json())
     .then((data) => {
-      if (data.msg == "The provided email exists. Please enter another one") {
-        alert("The provided email exists. Please enter another one");
+      if (data.msg == "The email provided is already registered. Enter another email to successfully register") {
+        swal("The email provided is already registered. Enter another email to successfully register");
       } else {
         console.log(data.token)
+
         swal("Registration Successful",  "success");
         context.commit('setToken',data.token);
         setTimeout(()=>{
@@ -202,11 +209,11 @@ async deleteProduct(context,productId){
     })
     .then((response) => response.json())
     .then((data) => {
-      if (data.msg == 'Email Not Found. Please register') {
-        alert(data.msg)
+      if (data.msg == 'Email not found. Please register') {
+        swal("Email not found. Please register");
       } else {
         if (data.msg == 'Password is Incorrect') {
-          alert(data.msg)
+          swal("Password is Incorrect");
         } else {
           console.log(data.token)
           swal("Login Successful", `Welcome, ${data.results[0].fullnames}`,  "success");
@@ -233,25 +240,7 @@ async deleteProduct(context,productId){
     }
   },
 
-//   async editUser(context, id){
-//     fetch('https://triosis-eccomerce.herokuapp.com/users/'+ id, {
-//         method:'PUT',
-//         body: JSON.stringify({
-//           fullnames: fullnames,
-//           email: email,
-//         userpassword: userpassword,
-
-//         }
-//         ),
-//         headers:{
-//             'Content-type': 'application/json; charset=UTF-8'
-//         },
-//     })
-//     .then((res)=> res.json())
-//     .then((data)=> context.dispatch('getUsers'));
-// },
 async editUser(context,payload){
-  // const {fullnames, email} = payload;
   fetch('https://triosis-eccomerce.herokuapp.com/users/'+ payload.id, {
       method:'PUT',
       body: JSON.stringify(payload),
@@ -334,22 +323,7 @@ deleteCart(context){
     }
   })
 }, 
-// deleteCartItem: async (context, id) => {
-//   let user = context.state.user.id
-//   await fetch(
-//     'https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart/' + id, {
-//         method: "DELETE",
-//         headers: {
-//           "Content-type": "application/json; charset=UTF-8"
-//         },
-//       }
-//     )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       console.log(data);
-//       context.dispatch("getUserCart", user);
-//     });
-// },
+
 deleteCartItem: async (context, id) => {
   fetch('https://triosis-eccomerce.herokuapp.com/users/' + context.state.user.id + '/cart/' + id, {
     method: "DELETE",

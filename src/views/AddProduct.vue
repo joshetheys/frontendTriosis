@@ -1,6 +1,6 @@
 <template>
    
-  <div class="container">
+  <div class="container" >
   
   
   <div class="signup-form">
@@ -89,7 +89,7 @@ body{
   font-family: "Open Sans", sans-serif;
 }
 .container {
-  height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +100,7 @@ body{
 .signup-form{
   text-align: center;
   background-color: white;
-  height: 70%;
+  height: 100v;
   width: 70%;
 }
 
