@@ -37,13 +37,16 @@
             <td data-title="Price">R {{product.price}}</td>
             <td data-title="Created By">{{product.createdBy}}</td>
             <td>
-              <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+              <!-- <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button> -->
               <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         :data-bs-target="'#update'+product.productId">
                         <i class="fas fa-edit"></i>
                     </button>
               <!-- <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button> -->
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+              <button id="delete" class="btn btn-danger" @click="deleteProduct(product.id)">
+                <i class="far fa-trash-alt"></i>
+                        </button>
+            <!-- <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button> -->
             </td>
           </tr>
         </tbody>
@@ -94,7 +97,18 @@ export default {
     mounted(){
         this.$store.dispatch("getProducts");
    
+    },
+
+    methods: {
+        editProduct() {
+            return this.$store.dispatch("editProduct", this.product);
+        },
+        deleteProduct(id) {
+            console.log("Product was deleted");
+            return this.$store.dispatch("deleteProduct", id);
+        }
     }
+
 
 }
 </script>

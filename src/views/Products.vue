@@ -2,6 +2,12 @@
     
   <div  v-if="products" class="containers">
 
+    <div style="display: flex; justify-content: center; overflow: hidden; padding-bottom: 3rem; padding-top: 3rem">
+<video src="../assets/mp4/landing.mp4" style="height: 666px; padding-top: 5vh" autoplay muted loop></video>
+<img src="https://i.postimg.cc/rwc6Jcw9/banner.gif" alt="Banner" >
+
+</div>
+
     <div class="row">
       <div class=" col-lg-4 col-md-6 col-sm-12" id="productCard">
         <router-link to="/productsCategory/K-Pop"><div class="card text-white">
@@ -132,6 +138,15 @@
       </div>
     </div>
 
+  </div>
+
+
+  <div style=" height: 100vh; display: flex; justify-content: center; align-self: center;" v-else >
+    <div style="display: flex; justify-content: center; align-self: center">
+
+      <img src="https://i.postimg.cc/SxX9g01J/loading.gif" style="width: 100%; height: auto"/>
+
+    </div>
   </div>
 </template>
 
